@@ -1,63 +1,41 @@
-from typing import List, Union
-
-
-def generate_sequence(
-    start: Union[int, float], end: Union[int, float], step: Union[int, float]
-) -> List[Union[int, float]]:
-
+def generate_sequence(start, end, step):
     if start >= end:
-        raise ValueError(f"start ({start}) должно быть меньше end ({end})")
-
+        raise ValueError("Начало должно быть меньше конца")
     if step <= 0:
-        raise ValueError(f"step ({step}) должно быть положительным числом")
+        raise ValueError("Шаг должен быть положительным")
 
     result = []
     current = start
-
     while current <= end:
         result.append(current)
         current += step
-
     return result
-
-
-def get_positive_number(prompt: str) -> float:
-
-    while True:
-        try:
-            value = float(input(prompt))
-            return value
-        except ValueError:
-            print("Ошибка: введите корректное число")
 
 
 def main():
     print("Генератор последовательности чисел")
-    print("-" * 35)
+    print("-" * 30)
 
     while True:
         try:
-            start = get_positive_number("Введите начало последовательности: ")
-            end = get_positive_number("Введите конец последовательности: ")
-            step = get_positive_number("Введите шаг: ")
+
+            start = float(input("Начало: "))
+            end = float(input("Конец: "))
+            step = float(input("Шаг: "))
 
             sequence = generate_sequence(start, end, step)
 
             print(f"\nРезультат: {sequence}")
-            print(f"Количество элементов: {len(sequence)}")
+            print(f"Количество: {len(sequence)}")
 
-            again = input(
-                "\nХотите создать другую последовательность? (да/нет): "
-            ).lower()
-            if again != "да" and again != "yes" and again != "y":
-                print("Программа завершена.")
+            if input("\nЕщё? (д/н): ").lower() not in ["д", "да", "y", "yes"]:
+                print("Пока!")
                 break
 
         except ValueError as e:
             print(f"Ошибка: {e}")
-            print("Попробуйте снова.\n")
         except KeyboardInterrupt:
-            print("\nПрограмма прервана пользователем.")
+            print("\nДо свидания!")
             break
 
 
